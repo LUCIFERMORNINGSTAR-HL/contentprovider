@@ -1,39 +1,3 @@
-
-# Ex.No:4 Create Your Own Content Providers to get Contacts details.
-
-
-## AIM:
-
-To create your own content providers to get contacts details using Android Studio.
-
-## EQUIPMENTS REQUIRED:
-
-Android Studio(Latest Version)
-
-## ALGORITHM:
-
-Step 1: Open Android Stdio and then click on File -> New -> New project.
-
-Step 2: Then type the Application name as “contentprovider″ and click Next. 
-
-Step 3: Then select the Minimum SDK as shown below and click Next.
-
-Step 4: Then select the Empty Activity and click Next. Finally click Finish.
-
-Step 5: Design layout in activity_main.xml.
-
-Step 6: Get contacts details and Display details give in MainActivity file.
-
-Step 7: Save and run the application.
-
-## PROGRAM:
-```
-/*
-Program to print the contact name and phone number using content providers.
-Developed by: R K JAYA KRISNAA
-Registeration Number : 212223223002
-*/
-
 package com.example.contentprovider;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -71,7 +35,7 @@ public class ContactsActivity extends AppCompatActivity {
     private void showContacts() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
                 checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
+            requestPermissions(new String[] { Manifest.permission.READ_CONTACTS }, PERMISSIONS_REQUEST_READ_CONTACTS);
         } else {
             getContacts();
         }
@@ -106,16 +70,18 @@ public class ContactsActivity extends AppCompatActivity {
                 Map<String, String> contactMap = new HashMap<>();
                 contactMap.put("name", "Name: " + name);
 
-                if (Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
+                if (Integer.parseInt(
+                        cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
                     Cursor phoneCursor = getContentResolver().query(
                             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                             null,
                             ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
-                            new String[]{id},
+                            new String[] { id },
                             null);
 
                     while (phoneCursor.moveToNext()) {
-                        String phone = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        String phone = phoneCursor
+                                .getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                         contactMap.put("phone", "Phone: " + phone);
                     }
                     phoneCursor.close();
@@ -127,8 +93,8 @@ public class ContactsActivity extends AppCompatActivity {
             // Create a SimpleAdapter to display the data in the ListView
             SimpleAdapter adapter = new SimpleAdapter(this, contactsList,
                     android.R.layout.simple_list_item_2,
-                    new String[] {"name", "phone"},
-                    new int[] {android.R.id.text1, android.R.id.text2});
+                    new String[] { "name", "phone" },
+                    new int[] { android.R.id.text1, android.R.id.text2 });
             contactsListView.setAdapter(adapter);
 
         } else {
@@ -137,18 +103,3 @@ public class ContactsActivity extends AppCompatActivity {
         }
     }
 }
-```
-
-## OUTPUT
-
-Coding part : 
-![alt text](<imgs/Screenshot 2025-09-21 132657.png>)
-
-Design part :
-![alt text](<imgs/Screenshot 2025-09-21 132726.png>)
-
-App:
-<img src="./imgs/Screenshot_2025-09-21-13-31-06-47_dbabbf44198b0f750f78ce20f75e2f13.jpg/" height=400>
-
-## RESULT
-Thus a Simple Android Application create your own content providers to get contacts details using Android Studio is developed and executed successfully.
